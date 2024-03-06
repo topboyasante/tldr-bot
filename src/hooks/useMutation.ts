@@ -14,21 +14,20 @@ function useMutationRequest() {
   } = useMutation({
     mutationFn: async (payload: payloadSchema) => {
       const res = await axios.post(
-        `${process.env.API_URL}/${payload.urlModifier}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${payload.urlModifier}`,
 
         payload.data,
         {
           headers: {
             "Content-Type": "application/json",
-            "X-RapidAPI-Key": process.env.RAPID_API_KEY,
-            "X-RapidAPI-Host": process.env.RAPID_API_HOST,
+            "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY,
+            "X-RapidAPI-Host": process.env.NEXT_PUBLIC_RAPID_API_HOST,
           },
         }
       );
       return res.data.summary[0];
     },
     onSuccess: (res) => {
-      console.log(res);
       addToTLDR({ role: "bot", content: res });
     },
     onError: (error: AxiosError<any, any>) => {
